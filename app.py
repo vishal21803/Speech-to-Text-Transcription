@@ -1,12 +1,13 @@
+
+
 from flask import Flask, render_template, jsonify, request
 import speech_recognition as sr
-
-from google_trans_new import google_translator
+from deep_translator import GoogleTranslator  # ✅ new import
 
 app = Flask(__name__)
 
+# Create a recognizer instance
 recognizer = sr.Recognizer()
-translator = google_translator()
 
 @app.route('/')
 def index():
@@ -15,15 +16,14 @@ def index():
 
 @app.route('/start-listening')
 def start_listening():
-    
     with sr.Microphone() as source:
         print("Speak now!")
         audio = recognizer.listen(source)
         try:
-            # Recognize speech using Google Speech Recognition API
+            # Recognize speech using Google Speech Recognition API (Hindi input)
             speech_text = recognizer.recognize_google(audio, language='hi-IN')
-            print(speech_text)
-            if speech_text == "exit":
+            print("Recognized Speech:", speech_text)
+            if speech_text.lower() == "exit":
                 return jsonify(transcribedText="Listening ended.")
         except sr.UnknownValueError:
             print("Could not understand.")
@@ -31,19 +31,16 @@ def start_listening():
         except sr.RequestError:
             print("Poor Network.")
             return jsonify(transcribedText="Poor Network.")
-        
-        # Translate the speech text to English
-        translated_text = translator.translate(speech_text, lang_tgt='en')
-        print(translated_text)
 
-        # Save speech and translated text to a file
-        save_text_to_file(speech_text, translated_text)
+        # ✅ Translate the speech text to English
+        try:
+            translated_text = GoogleTranslator(source='auto', target='en').translate(speech_text)
+            print("Translated Text:", translated_text)
+        except Exception as e:
+            print("Translation failed:", str(e))
+            translated_text = "Translation failed."
 
-        # Return both speech text and translated text as JSON
-        return jsonify({
-            'speechText': speech_text,
-            'translatedText': translated_text
-        })
+       
 
 @app.route('/save-text', methods=['POST'])
 def save_text():
