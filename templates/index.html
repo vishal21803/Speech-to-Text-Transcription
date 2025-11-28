@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Speech to Text Transcription</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Speech to Text Transcription</h1>
+
+        <!-- Button container -->
+        <div class="button-container">
+            <button id="startButton">Start Listening</button>
+            <!-- <button id="saveTextButton">Save Text</button> -->
+        </div>
+
+        <!-- Loading spinner -->
+        <div class="loading-spinner" id="loadingSpinner"></div>
+
+        <!-- Result container -->
+        <div class="result-container">
+            <div class="left-column">
+                <h2>Speech Text (Hindi):</h2>
+                <p id="transcribedText">No transcription yet.</p>
+            </div>
+            <!-- Divider -->
+            <div class="divider"></div>
+            <div class="right-column">
+                <h2>Translated Text (English):</h2>
+                <p id="translatedText">No translation yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
