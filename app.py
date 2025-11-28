@@ -4,7 +4,6 @@ from google_trans_new import google_translator
 
 app = Flask(__name__)
 
-# Create a recognizer and translator instance
 recognizer = sr.Recognizer()
 translator = google_translator()
 
