@@ -1,12 +1,10 @@
 
-
 from flask import Flask, render_template, jsonify, request
 import speech_recognition as sr
 from deep_translator import GoogleTranslator  # ✅ new import
 
 app = Flask(__name__)
 
-# Create a recognizer instance
 recognizer = sr.Recognizer()
 
 @app.route('/')
